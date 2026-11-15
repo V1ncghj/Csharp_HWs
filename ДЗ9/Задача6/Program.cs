@@ -8,10 +8,8 @@ internal class Program
     {
         string settingsPath = Path.Combine(AppContext.BaseDirectory, "settings.json");
 
-        // Проверяем, существует ли файл настроек
         if (File.Exists(settingsPath))
         {
-            // Файл есть — читаем, десериализуем и выводим текущие настройки
             string json = File.ReadAllText(settingsPath);
             GameSettings settings = JsonSerializer.Deserialize<GameSettings>(json);
 
@@ -22,7 +20,6 @@ internal class Program
         }
         else
         {
-            // Файла нет — создаём новые настройки
             Console.WriteLine("Файл настроек не найден. Создаём новые настройки.");
 
             var settings = new GameSettings();
@@ -36,7 +33,6 @@ internal class Program
             Console.Write("Введите громкость музыки (0–100): ");
             settings.MusicVolume = int.Parse(Console.ReadLine());
 
-            // Сериализуем объект в JSON с отступами и сохраняем в файл
             var options = new JsonSerializerOptions { WriteIndented = true };
             string json = JsonSerializer.Serialize(settings, options);
             File.WriteAllText(settingsPath, json);
